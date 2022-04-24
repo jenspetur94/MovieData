@@ -1,15 +1,18 @@
 package com.jenspetur94.MovieData.Controllers;
 
 import com.jenspetur94.MovieData.Domain.Movie;
+import com.jenspetur94.MovieData.Enums.MovieGenre;
 import com.jenspetur94.MovieData.Repositories.MovieRepository;
 import com.jenspetur94.MovieData.RequestModels.AddMovieRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequestMapping(path="movie")
@@ -20,7 +23,12 @@ public class MovieController {
     @PostMapping(path="")
     public @ResponseBody String addNewMovie(@RequestBody AddMovieRequest addMovieRequest){
         Movie movie = new Movie();
-        movie.setGenres(addMovieRequest.getGenres());
+        List<MovieGenre> convertedGenres = addMovieRequest.getGenres().stream()
+                .map(MovieGenre::get)
+                .filter(converted -> converted.isPresent())
+                .map(Optional::get)
+                .collect(toList());
+        movie.setGenres(convertedGenres);
         movie.setTitle(addMovieRequest.getTitle());
         movieRepository.save((movie));
         return "Saved";
@@ -32,10 +40,8 @@ public class MovieController {
         return movieRepository.findAll();
     }
 
-//    @GetMapping("/{id}")
-//    public @ResponseBody Movie getMovieById(@PathVariable id){
-//        if(movieRepository.existsById(id))
-//            return movieRepository.findById(id);
-//        return new HttpClientErrorException.BadRequest();
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable Integer id){
+        return ResponseEntity.of(movieRepository.findById(id));
+    }
 }

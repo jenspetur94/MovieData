@@ -4,9 +4,6 @@ import com.jenspetur94.MovieData.Enums.MovieGenre;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
-
-import static java.util.stream.Collectors.*;
 
 @Entity
 public class Movie {
@@ -16,8 +13,8 @@ public class Movie {
 
     private String title;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-    @CollectionTable(name ="MovieGenre", joinColumns= @JoinColumn(name = "id"))
+    @ElementCollection(targetClass = MovieGenre.class)
+    @CollectionTable
     @Enumerated(EnumType.STRING)
     private List<MovieGenre> genres;
 
@@ -39,15 +36,6 @@ public class Movie {
 
     public List<MovieGenre> getGenres() {
         return genres;
-    }
-
-    public void setGenres(List<String> genres){
-        List<MovieGenre> convertedGenres = genres.stream()
-                .map(MovieGenre::get)
-                .filter(converted -> !converted.isPresent())
-                .map(Optional::get)
-                .collect(toList());
-        this.genres = convertedGenres;
     }
 
     public void setGenres(List<MovieGenre> genres) {
