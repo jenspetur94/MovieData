@@ -1,6 +1,6 @@
 package com.jenspetur94.MovieData.Domain;
 
-import com.jenspetur94.MovieData.Enums.MovieGenre;
+import com.jenspetur94.MovieData.core.domain.MovieGenreEnum;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,10 +13,16 @@ public class Movie {
 
     private String title;
 
-    @ElementCollection(targetClass = MovieGenre.class)
+    @ElementCollection(targetClass = MovieGenreEnum.class)
     @CollectionTable
     @Enumerated(EnumType.STRING)
-    private List<MovieGenre> genres;
+    private List<MovieGenreEnum> genres;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Tag> tags;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Rating> ratings;
 
     public Integer getId() {
         return id;
@@ -34,11 +40,27 @@ public class Movie {
         this.title = title;
     }
 
-    public List<MovieGenre> getGenres() {
+    public List<MovieGenreEnum> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<MovieGenre> genres) {
+    public void setGenres(List<MovieGenreEnum> genres) {
         this.genres = genres;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

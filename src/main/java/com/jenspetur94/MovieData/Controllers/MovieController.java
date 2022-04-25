@@ -1,7 +1,7 @@
 package com.jenspetur94.MovieData.Controllers;
 
 import com.jenspetur94.MovieData.Domain.Movie;
-import com.jenspetur94.MovieData.Enums.MovieGenre;
+import com.jenspetur94.MovieData.core.domain.MovieGenreEnum;
 import com.jenspetur94.MovieData.Repositories.MovieRepository;
 import com.jenspetur94.MovieData.RequestModels.AddMovieRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class MovieController {
     @PostMapping(path="")
     public @ResponseBody String addNewMovie(@RequestBody AddMovieRequest addMovieRequest){
         Movie movie = new Movie();
-        List<MovieGenre> convertedGenres = addMovieRequest.getGenres().stream()
-                .map(MovieGenre::get)
+        List<MovieGenreEnum> convertedGenres = addMovieRequest.getGenres().stream()
+                .map(MovieGenreEnum::get)
                 .filter(converted -> converted.isPresent())
                 .map(Optional::get)
                 .collect(toList());
