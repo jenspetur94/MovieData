@@ -1,22 +1,22 @@
-package com.jenspetur94.MovieData.Domain;
+package com.jenspetur94.MovieData.data.db.jpa.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Entity
-public class Rating {
+public class RatingData {
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable= false)
-    private User user;
+    private UserData userData;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable= false)
-    private Movie movie;
+    private MovieData movieData;
 
     @Min(0)
     @Max(5)
@@ -30,20 +30,20 @@ public class Rating {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public UserData getUser() {
+        return userData;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserData userData) {
+        this.userData = userData;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public MovieData getMovie() {
+        return movieData;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovie(MovieData movieData) {
+        this.movieData = movieData;
     }
 
     public Integer getRating() {

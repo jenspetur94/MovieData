@@ -1,11 +1,11 @@
-package com.jenspetur94.MovieData.Domain;
+package com.jenspetur94.MovieData.data.db.jpa.entities;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class User {
+public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -15,10 +15,10 @@ public class User {
     private Date birthday;
 
     @OneToMany(mappedBy = "user")
-    private List<Tag> tags;
+    private List<TagData> tagData;
 
-    @OneToMany(mappedBy = "user")
-    private List<Rating> ratings;
+    @OneToMany(mappedBy = "userData")
+    private List<RatingData> ratingData;
 
     public Integer getId() {
         return id;
@@ -44,19 +44,19 @@ public class User {
         this.birthday = birthday;
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public List<TagData> getTags() {
+        return tagData;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setTags(List<TagData> tagData) {
+        this.tagData = tagData;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public List<RatingData> getRatings() {
+        return ratingData;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+    public void setRatings(List<RatingData> ratingData) {
+        this.ratingData = ratingData;
     }
 }

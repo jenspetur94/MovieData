@@ -1,4 +1,4 @@
-package com.jenspetur94.MovieData.Domain;
+package com.jenspetur94.MovieData.data.db.jpa.entities;
 
 import com.jenspetur94.MovieData.core.domain.MovieGenreEnum;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Movie {
+public class MovieData {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -19,10 +19,10 @@ public class Movie {
     private List<MovieGenreEnum> genres;
 
     @OneToMany(mappedBy = "movie")
-    private List<Tag> tags;
+    private List<TagData> tagData;
 
-    @OneToMany(mappedBy = "movie")
-    private List<Rating> ratings;
+    @OneToMany(mappedBy = "movieData")
+    private List<RatingData> ratingData;
 
     public Integer getId() {
         return id;
@@ -48,19 +48,19 @@ public class Movie {
         this.genres = genres;
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public List<TagData> getTags() {
+        return tagData;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setTags(List<TagData> tagData) {
+        this.tagData = tagData;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public List<RatingData> getRatings() {
+        return ratingData;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+    public void setRatings(List<RatingData> ratingData) {
+        this.ratingData = ratingData;
     }
 }
